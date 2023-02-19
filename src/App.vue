@@ -1,27 +1,22 @@
+<style lang="scss">
+@import '@/styles/main.scss';
+</style>
+
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+   <div class="flex">
+      <div class="dice">{{ ~~(roll.result / 10) }}</div>
+      <div class="dice">{{ roll.result % 10 }}</div>
+   </div>
+   <div v-if="!roll.inProcess">{{ roll.success ? 'Yes' : 'No' }}</div>
+   <button v-if="!roll.inProcess" v-on:click="makeRoll(50)">Roll</button>
 </template>
 
-<script lang="ts">
-import { Options, Vue } from "vue-class-component";
-import HelloWorld from "./components/HelloWorld.vue";
+<script setup lang="ts">
+import { reactive } from 'vue';
+import RollModel from './rolls/dice-roll';
+import RollService from './rolls/roll.service';
+const roll = reactive(new RollModel());
+const service = new RollService(roll);
 
-@Options({
-  components: {
-    HelloWorld,
-  },
-})
-export default class App extends Vue {}
+const makeRoll = (need) => service.makeRoll(need);
 </script>
-
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
