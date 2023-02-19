@@ -10,6 +10,7 @@
   "dependencies": {
     "@capacitor/core": "^4.6.3",
     "@capacitor/filesystem": "^4.1.4",
+    "@capacitor/storage": "^1.2.5",
     "core-js": "^3.6.5",
     "lzutf8": "^0.6.3",
     "register-service-worker": "^1.7.1",
