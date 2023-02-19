@@ -13,10 +13,25 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue';
+import Character from './components/game/character';
+import SavingService from './components/saving/saving.service';
 import RollModel from './rolls/dice-roll';
 import RollService from './rolls/roll.service';
-const roll = reactive(new RollModel());
-const service = new RollService(roll);
 
-const makeRoll = (need) => service.makeRoll(need);
+const roll = reactive(new RollModel());
+const rollService = new RollService(roll);
+let mainCharacter = reactive(new Character());
+const saveService = new SavingService<Character>(mainCharacter);
+
+const makeRoll = (need) => rollService.makeRoll(need);
+
+const checkSave = () => {
+   saveService.load().then((x) => {
+      if (!x.success) return;
+      mainCharacter = x.result.entity;
+      console.log(mainCharacter);
+   });
+};
+
+checkSave();
 </script>
